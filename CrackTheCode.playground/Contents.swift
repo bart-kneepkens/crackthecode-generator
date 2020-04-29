@@ -142,18 +142,32 @@ func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
 }
 
 
-let randomSequence = generateRandomSequence(withLength: 6)
+var hits = 0
 
-print(randomSequence)
-
-var solutionFound = false
-
-while !solutionFound {
-    let randomStatements = generateRandomStatements(for: randomSequence)
-    if let solved = solve(statements: randomStatements, possibilities: 7) {
-        solutionFound = true
-        print("statements \(randomStatements) solve sequence \(randomSequence)")
-    } else {
-        print("statements \(randomStatements) not solvable single")
-    }
+while hits < 15 {
+    let randomSequence = generateRandomSequence(withLength: 6)
+//    let randomSequence: [Lock: Int] = [.A: 2, .B: 2, .C: 2, .D: 3, .E: 4, .F: 1]
+    
+//    print(randomSequence)
+    
+    var solutionFound = false
+    
+//    while !solutionFound {
+        let randomStatements = generateRandomStatements(for: randomSequence)
+        if let solved = solve(statements: randomStatements, possibilities: 7) {
+            solutionFound = true
+            
+            let sequenceValueStrings = randomSequence.map { key, value -> String in
+                return "\(key.rawValue):\(value)"
+            }
+            
+            print("statements \(randomStatements) solve sequence \(sequenceValueStrings)")
+            hits += 1
+        }
+//        else {
+//            print("not working, \(randomStatements)")
+//        }
+//    }
 }
+
+print("done")
