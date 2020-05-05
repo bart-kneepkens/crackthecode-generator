@@ -8,14 +8,25 @@
 
 import Cocoa
 
-struct Statement: CustomStringConvertible, Hashable {
+struct Statement: CustomStringConvertible, Hashable, Equatable {
     let left: Lock
     let right: Lock
     let result: Int
+    let type: StatementType
     
     var description: String {
-        return "\(left)+\(right)=\(result)"
+        return "\(left)\(type.rawValue)\(right)=\(result)"
     }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.type == rhs.type && Set([lhs.left, lhs.right, rhs.left, rhs.right]).count == 2 && (lhs.result == rhs.result)
+    }
+}
+
+enum StatementType: String {
+    case add = "+"
+    case subtract = "-"
+    case multiply = "x"
 }
 
 enum Lock: String {
@@ -28,6 +39,7 @@ enum Lock: String {
 }
 
 let ALL_LOCKS: [Lock] = [.A, .B, .C, .D, .E, .F]
+let ALL_STATEMENT_TYPES: [StatementType] = [.add, .subtract, .multiply]
 
 func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
     let possibleValues = Set(0..<possibilities)
@@ -84,57 +96,36 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
     return possibleAnswers
 }
 
-//if let solution = solve(statements: [
-//    Statement(left: .A, right: .B, result: 5),
-//    Statement(left: .B, right: .C, result: 4),
-//    Statement(left: .A, right: .C, result: 4),
-//], possibilities: 4) {
-//    print("A:\(solution[Lock.A]!.first!) B:\(solution[Lock.B]!.first!) C:\(solution[Lock.C]!.first!)");
-//} else {
-//    print("Failed. bye")
-//}
-
-//let randomSequence: [Lock : Int] = [.A: 3, .B: 2, .C: 1]
-
-//let maxValue = 6 // 3 + 3
-//let possibilities = 4 // 0, 1, 2, 3'
-
-//var workingStatementsFound = false
-
 func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
     var generatedStatements = Set<Statement>()
     let possibleLocks: Set<Lock> = Set(ALL_LOCKS.prefix(upTo: sequence.count))
     
     while(generatedStatements.count < sequence.count) {
+        let leftLock = possibleLocks.randomElement()!
+        let rightLock = possibleLocks.filter({ $0 != leftLock }).randomElement()!
         
-        let left = possibleLocks.randomElement()
-        let right = possibleLocks.filter({ $0 != left }).randomElement()
-        let result = sequence[left!]! + sequence[right!]!
+        let leftValue = sequence[leftLock]!
+        let rightValue = sequence[rightLock]!
         
-        let newStatement = Statement(left: left!, right: right!, result: result)
+        let type = [StatementType.add].randomElement()!
         
-        if generatedStatements.contains(where: { st -> Bool in
-            if st.result == newStatement.result {
-                if st.left == newStatement.left && st.right == newStatement.right {
-                    return true
-                } else if st.left == newStatement.right && st.right == newStatement.left {
-                    return true
-                }
-            }
-            return false
-        }) {
-            continue
-        } else {
-            generatedStatements.insert(newStatement)
+        var result = 0
+        
+        switch type {
+        case .add: result = leftValue + rightValue
+        default: result = -1
         }
+        
+        
+        let newStatement = Statement(left: leftLock, right: rightLock, result: result, type: type)
+        
+        guard !generatedStatements.contains(where: { $0 == newStatement }) else { continue }
+        
+        generatedStatements.insert(newStatement)
     }
     
     return generatedStatements
 }
-
-
-
-//print(generateRandomStatements(for: [.A: 1, .B: 2, .C: 3, .D: 4, .E: 5, .F: 6]))
 
 func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
     let locks: [Lock] = Array(ALL_LOCKS.prefix(upTo: length))
@@ -149,33 +140,19 @@ func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
     return sequence
 }
 
-
 var hits = 0
 
 while hits < 15 {
     let randomSequence = generateRandomSequence(withLength: 6)
-//    let randomSequence: [Lock: Int] = [.A: 2, .B: 2, .C: 2, .D: 3, .E: 4, .F: 1]
     
-//    print(randomSequence)
-    
-    var solutionFound = false
-    
-//    while !solutionFound {
-        let randomStatements = generateRandomStatements(for: randomSequence)
-        if let solved = solve(statements: randomStatements, possibilities: 7) {
-            solutionFound = true
-            
-            let sequenceValueStrings = randomSequence.map { key, value -> String in
-                return "\(key.rawValue):\(value)"
-            }
-            
-            print("statements \(randomStatements) solve sequence \(sequenceValueStrings)")
-            hits += 1
+    let randomStatements = generateRandomStatements(for: randomSequence)
+    if let _ = solve(statements: randomStatements, possibilities: 7) {
+        
+        let sequenceValueStrings = randomSequence.map { key, value -> String in
+            return "\(key.rawValue):\(value)"
         }
-//        else {
-//            print("not working, \(randomStatements)")
-//        }
-//    }
+        
+        print("statements \(randomStatements) solve sequence \(sequenceValueStrings)")
+        hits += 1
+    }
 }
-
-print("done")
