@@ -65,7 +65,7 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
                 switch statement.type {
                 case .add: return set.filter({ number + $0 == statement.result })
                 case .subtract: return left ? set.filter({ $0 - number == statement.result }) : set.filter({ number - $0 == statement.result })
-                default: return Set([])
+                case .multiply: return set.filter({ number * $0 == statement.result })
                 }
             }
             
@@ -119,7 +119,7 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
         let leftValue = sequence[leftLock]!
         let rightValue = sequence[rightLock]!
         
-        let type = [StatementType.subtract, StatementType.add].randomElement()!
+        let type = [StatementType.subtract, StatementType.add, StatementType.multiply].randomElement()!
         
         // skip
         if type == .subtract && rightValue > leftValue {
@@ -131,7 +131,7 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
         switch type {
         case .add: result = leftValue + rightValue
         case .subtract: result = leftValue - rightValue
-        default: result = -1
+        case .multiply: result = leftValue * rightValue
         }
         
         let newStatement = Statement(left: leftLock, right: rightLock, result: result, type: type)
@@ -161,13 +161,13 @@ var hits = 0
 
 while hits < 15 {
     let randomSequence = generateRandomSequence(withLength: 6)
-
+    
     let randomStatements = generateRandomStatements(for: randomSequence)
     if let _ = solve(statements: randomStatements, possibilities: 7) {
         let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
             return lhs.key.rawValue < rhs.key.rawValue
-            }.map({ $0.value }).map({ String($0) }).joined()
-
+        }.map({ $0.value }).map({ String($0) }).joined()
+        
         print("\(randomStatements) solve sequence \(sortedSequence)")
         hits += 1
     }
