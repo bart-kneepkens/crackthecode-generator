@@ -14,7 +14,7 @@ struct Statement: CustomStringConvertible, Hashable {
     let result: Int
     
     var description: String {
-        return "\(left)-\(right)=\(result)"
+        return "\(left)+\(right)=\(result)"
     }
 }
 
@@ -48,14 +48,14 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
             var newLeft: Set<Int> = []
             
             for num in possibleAnswers[statement.left]! {
-                let rightNums = possibleAnswers[statement.right]!.filter({ abs(num - $0) == statement.result })
+                let rightNums = possibleAnswers[statement.right]!.filter({ num + $0 == statement.result })
                 if rightNums.count > 0 {
                     rightNums.forEach({ newRight.insert($0) })
                 }
             }
             
             for num in possibleAnswers[statement.right]! {
-                let leftNums = possibleAnswers[statement.left]!.filter({ abs(num - $0) == statement.result })
+                let leftNums = possibleAnswers[statement.left]!.filter({ num + $0 == statement.result })
                 if leftNums.count > 0 {
                     leftNums.forEach({ newLeft.insert($0) })
                 }
@@ -109,7 +109,7 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
         
         let left = possibleLocks.randomElement()
         let right = possibleLocks.filter({ $0 != left }).randomElement()
-        let result = abs(sequence[left!]! - sequence[right!]!)
+        let result = sequence[left!]! + sequence[right!]!
         
         let newStatement = Statement(left: left!, right: right!, result: result)
         
@@ -156,7 +156,7 @@ while hits < 15 {
     let randomSequence = generateRandomSequence(withLength: 6)
 //    let randomSequence: [Lock: Int] = [.A: 2, .B: 2, .C: 2, .D: 3, .E: 4, .F: 1]
     
-    print(randomSequence)
+//    print(randomSequence)
     
     var solutionFound = false
     
