@@ -55,26 +55,37 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
         let initialPossible = possibleAnswers
         
         for statement in statements {
-            //            print(statement)
             var newRight: Set<Int> =  []
             var newLeft: Set<Int> = []
             
-            for num in possibleAnswers[statement.left]! {
-                let rightNums = possibleAnswers[statement.right]!.filter({ num + $0 == statement.result })
+            let possibleLefts = possibleAnswers[statement.left]!
+            let possibleRights = possibleAnswers[statement.right]!
+            
+            func findHits(in set: Set<Int>, with statement: Statement, from number: Int) -> Set<Int> {
+                switch statement.type {
+                case .add: return set.filter({ number + $0 == statement.result })
+                default: return Set([])
+                }
+            }
+            
+            for num in possibleLefts {
+                let rightNums = findHits(in: possibleRights, with: statement, from: num)
+                
                 if rightNums.count > 0 {
                     rightNums.forEach({ newRight.insert($0) })
                 }
             }
             
-            for num in possibleAnswers[statement.right]! {
-                let leftNums = possibleAnswers[statement.left]!.filter({ num + $0 == statement.result })
+            for num in possibleRights {
+                let leftNums = findHits(in: possibleLefts, with: statement, from: num)
+                
                 if leftNums.count > 0 {
                     leftNums.forEach({ newLeft.insert($0) })
                 }
             }
             
-            possibleAnswers[statement.right]! = possibleAnswers[statement.right]!.intersection(newRight)
-            possibleAnswers[statement.left]! = possibleAnswers[statement.left]!.intersection(newLeft)
+            possibleAnswers[statement.right] = possibleRights.intersection(newRight)
+            possibleAnswers[statement.left] = possibleLefts.intersection(newLeft)
         }
         
         // Nothing changed this time around, meaning there are multiple answers.
@@ -115,7 +126,6 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
         case .add: result = leftValue + rightValue
         default: result = -1
         }
-        
         
         let newStatement = Statement(left: leftLock, right: rightLock, result: result, type: type)
         
