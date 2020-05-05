@@ -61,15 +61,16 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
             let possibleLefts = possibleAnswers[statement.left]!
             let possibleRights = possibleAnswers[statement.right]!
             
-            func findHits(in set: Set<Int>, with statement: Statement, from number: Int) -> Set<Int> {
+            func findHits(in set: Set<Int>, with statement: Statement, from number: Int, left: Bool) -> Set<Int> {
                 switch statement.type {
                 case .add: return set.filter({ number + $0 == statement.result })
+                case .subtract: return left ? set.filter({ $0 - number == statement.result }) : set.filter({ number - $0 == statement.result })
                 default: return Set([])
                 }
             }
             
             for num in possibleLefts {
-                let rightNums = findHits(in: possibleRights, with: statement, from: num)
+                let rightNums = findHits(in: possibleRights, with: statement, from: num, left: false )
                 
                 if rightNums.count > 0 {
                     rightNums.forEach({ newRight.insert($0) })
@@ -77,7 +78,7 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
             }
             
             for num in possibleRights {
-                let leftNums = findHits(in: possibleLefts, with: statement, from: num)
+                let leftNums = findHits(in: possibleLefts, with: statement, from: num, left: true)
                 
                 if leftNums.count > 0 {
                     leftNums.forEach({ newLeft.insert($0) })
@@ -118,12 +119,18 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
         let leftValue = sequence[leftLock]!
         let rightValue = sequence[rightLock]!
         
-        let type = [StatementType.add].randomElement()!
+        let type = [StatementType.subtract, StatementType.add].randomElement()!
+        
+        // skip
+        if type == .subtract && rightValue > leftValue {
+            continue
+        }
         
         var result = 0
         
         switch type {
         case .add: result = leftValue + rightValue
+        case .subtract: result = leftValue - rightValue
         default: result = -1
         }
         
@@ -154,15 +161,23 @@ var hits = 0
 
 while hits < 15 {
     let randomSequence = generateRandomSequence(withLength: 6)
-    
+
     let randomStatements = generateRandomStatements(for: randomSequence)
     if let _ = solve(statements: randomStatements, possibilities: 7) {
-        
-        let sequenceValueStrings = randomSequence.map { key, value -> String in
-            return "\(key.rawValue):\(value)"
-        }
-        
-        print("statements \(randomStatements) solve sequence \(sequenceValueStrings)")
+        let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
+            return lhs.key.rawValue < rhs.key.rawValue
+            }.map({ $0.value }).map({ String($0) }).joined()
+
+        print("\(randomStatements) solve sequence \(sortedSequence)")
         hits += 1
     }
 }
+
+//print(solve(statements: Set([
+//    Statement(left: .B, right: .A, result: 6, type: .add),
+//    Statement(left: .E, right: .B, result: 5, type: .add),
+//    Statement(left: .C, right: .D, result: 2, type: .subtract),
+//    Statement(left: .C, right: .F, result: 0, type: .subtract),
+//    Statement(left: .E, right: .C, result: 8, type: .add),
+//    Statement(left: .F, right: .B, result: 3, type: .subtract),
+//]), possibilities: 7))
