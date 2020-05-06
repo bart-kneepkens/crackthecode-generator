@@ -41,7 +41,7 @@ enum Lock: String {
 let ALL_LOCKS: [Lock] = [.A, .B, .C, .D, .E, .F]
 let ALL_STATEMENT_TYPES: [StatementType] = [.add, .subtract, .multiply]
 
-func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
+func solve(statements: Set<Statement>, possibilities: Int) -> Int?{
     let possibleValues = Set(0..<possibilities)
     var possibleAnswers: [Lock: Set<Int>] = [:]
     
@@ -51,8 +51,11 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
     
     var isDone = false
     
+    var complexity = 0
+    
     while !isDone {
         let initialPossible = possibleAnswers
+        complexity += 1
         
         for statement in statements {
             var newRight: Set<Int> =  []
@@ -101,11 +104,10 @@ func solve(statements: Set<Statement>, possibilities: Int) -> [Lock: Set<Int>]?{
             }
         }
         
-        
         isDone = kut
     }
     
-    return possibleAnswers
+    return complexity
 }
 
 func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
@@ -159,16 +161,17 @@ func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
 
 var hits = 0
 
-while hits < 15 {
+while hits < 15000 {
     let randomSequence = generateRandomSequence(withLength: 6)
     
     let randomStatements = generateRandomStatements(for: randomSequence)
-    if let _ = solve(statements: randomStatements, possibilities: 7) {
+    if let complexity = solve(statements: randomStatements, possibilities: 7) {
+        
         let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
             return lhs.key.rawValue < rhs.key.rawValue
         }.map({ $0.value }).map({ String($0) }).joined()
         
-        print("\(randomStatements) solve sequence \(sortedSequence)")
+        print("\(randomStatements) solve sequence \(sortedSequence) with complexity \(complexity)")
         hits += 1
     }
 }
