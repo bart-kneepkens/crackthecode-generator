@@ -8,38 +8,10 @@
 
 import Cocoa
 
-struct Statement: CustomStringConvertible, Hashable, Equatable {
-    let left: Lock
-    let right: Lock
-    let result: Int
-    let type: StatementType
-    
-    var description: String {
-        return "\(left)\(type.rawValue)\(right)=\(result)"
-    }
-    
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.type == rhs.type && Set([lhs.left, lhs.right, rhs.left, rhs.right]).count == 2 && (lhs.result == rhs.result)
-    }
+func getDocumentsDirectory() -> URL {
+    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    return paths[0]
 }
-
-enum StatementType: String {
-    case add = "+"
-    case subtract = "-"
-    case multiply = "x"
-}
-
-enum Lock: String {
-    case A
-    case B
-    case C
-    case D
-    case E
-    case F
-}
-
-let ALL_LOCKS: [Lock] = [.A, .B, .C, .D, .E, .F]
-let ALL_STATEMENT_TYPES: [StatementType] = [.add, .subtract, .multiply]
 
 func solve(statements: Set<Statement>, possibilities: Int) -> Int?{
     let possibleValues = Set(0..<possibilities)
@@ -159,28 +131,33 @@ func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
     return sequence
 }
 
-var hits = 0
+var hits: [Puzzle] = []
 
-while hits < 15000 {
+while hits.count < 10 {
     let randomSequence = generateRandomSequence(withLength: 6)
-    
+
     let randomStatements = generateRandomStatements(for: randomSequence)
     if let complexity = solve(statements: randomStatements, possibilities: 7) {
-        
+
+        guard complexity == 1 else { continue }
         let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
             return lhs.key.rawValue < rhs.key.rawValue
         }.map({ $0.value }).map({ String($0) }).joined()
-        
-        print("\(randomStatements) solve sequence \(sortedSequence) with complexity \(complexity)")
-        hits += 1
+
+//        print("\(randomStatements) solve sequence \(sortedSequence) with complexity \(complexity)")
+        print("working..")
+        hits.append(Puzzle(statements: Array(randomStatements), answer: sortedSequence))
     }
 }
 
-//print(solve(statements: Set([
-//    Statement(left: .B, right: .A, result: 6, type: .add),
-//    Statement(left: .E, right: .B, result: 5, type: .add),
-//    Statement(left: .C, right: .D, result: 2, type: .subtract),
-//    Statement(left: .C, right: .F, result: 0, type: .subtract),
-//    Statement(left: .E, right: .C, result: 8, type: .add),
-//    Statement(left: .F, right: .B, result: 3, type: .subtract),
-//]), possibilities: 7))
+let encoder = JSONEncoder()
+encoder.outputFormatting = .prettyPrinted
+
+let dtoHits = hits.map({ $0.dataTransferObject() })
+let data = try! encoder.encode(dtoHits)
+
+print(String(data: data, encoding: .utf8)!)
+
+let filename = getDocumentsDirectory().appendingPathComponent("ecco2k.json")
+
+try! data.write(to: filename)
