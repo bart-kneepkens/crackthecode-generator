@@ -15,6 +15,14 @@ enum Difficulty: Int {
 }
 
 extension Difficulty {
+    var minimumComplexity: Int {
+        switch self {
+        case .hard: return 3
+        default:
+            return Int.min
+        }
+    }
+    
     var maximumComplexity: Int {
         switch self {
         case .easy: return Int.max
@@ -201,7 +209,7 @@ func run(amount: Int, difficulty: Difficulty) {
 
         if let complexity = solve(statements: randomStatements, difficulty: difficulty) {
 
-            guard complexity <= difficulty.maximumComplexity else { continue }
+            guard complexity <= difficulty.maximumComplexity && complexity > difficulty.minimumComplexity else { continue }
 
             print("working.. \(hits.count) \(sortedSequence) \(complexity)")
             hits[sortedSequence] = Puzzle(statements: Array(randomStatements), answer: sortedSequence)
@@ -214,11 +222,11 @@ func run(amount: Int, difficulty: Difficulty) {
     let dtoHits = hits.map({ $0.value.dataTransferObject() })
     let data = try! encoder.encode(dtoHits)
 
-    print(String(data: data, encoding: .utf8)!)
+//    print(String(data: data, encoding: .utf8)!)
 
     let filename = getDocumentsDirectory().appendingPathComponent("puzzles_88.json")
 
     try! data.write(to: filename)
 }
 
-run(amount: 5000, difficulty: .medium)
+run(amount: 26, difficulty: .hard)
