@@ -52,6 +52,10 @@ extension Statement {
     func dataTransferObject() -> StatementDTO {
         return StatementDTO(left: self.left, right: self.right, result: self.result, type: self.type)
     }
+    
+    var string: String {
+        return self.description
+    }
 }
 
 struct StatementDTO: Codable {

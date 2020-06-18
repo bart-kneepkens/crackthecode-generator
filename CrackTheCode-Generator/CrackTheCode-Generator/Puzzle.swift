@@ -18,11 +18,11 @@ extension Puzzle {
     }
     
     func dataTransferObject() -> PuzzleDTO {
-        return PuzzleDTO(statements: self.statements.map({ $0.dataTransferObject() }), answer: self.answer)
+        return PuzzleDTO(statements: self.statements.map({ $0.description }), answer: self.answer)
     }
 }
 
 struct PuzzleDTO: Codable {
-    let statements: [StatementDTO]?
+    let statements: [String]?
     let answer: String?
 }

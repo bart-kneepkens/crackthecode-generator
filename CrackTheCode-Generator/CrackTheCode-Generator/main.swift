@@ -8,6 +8,14 @@
 
 import Cocoa
 
+func isEasilyGuessable(_ statement: Statement) -> Bool {
+    guard statement.type == .multiply else { return false }
+    
+    let number = statement.result
+    let squareRoot = sqrt(Double(number))
+    return [1.0, 5.0, 3.0, 4.0, 5.0, 6.0].contains(squareRoot)
+}
+
 func getDocumentsDirectory() -> URL {
     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     return paths[0]
@@ -110,6 +118,8 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
         
         let newStatement = Statement(left: leftLock, right: rightLock, result: result, type: type)
         
+        guard !isEasilyGuessable(newStatement) else { continue }
+        
         guard !generatedStatements.contains(where: { $0 == newStatement }) else { continue }
         
         generatedStatements.insert(newStatement)
@@ -123,6 +133,7 @@ func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
     let maxValue = length
     var sequence: [Lock: Int] = [:]
     
+    
     for lock in locks {
         let randomValue = Array(0...maxValue).randomElement() ?? -1
         sequence[lock] = randomValue
@@ -131,33 +142,48 @@ func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
     return sequence
 }
 
-var hits: [Puzzle] = []
+func run() {
+    var hits: [String: Puzzle] = [:]
 
-while hits.count < 10 {
-    let randomSequence = generateRandomSequence(withLength: 6)
+    var counter = 0
 
-    let randomStatements = generateRandomStatements(for: randomSequence)
-    if let complexity = solve(statements: randomStatements, possibilities: 7) {
+    while hits.count < 10 {
 
-        guard complexity == 1 else { continue }
+        let randomSequence = generateRandomSequence(withLength: ALL_LOCKS.count)
+
+        let randomStatements = generateRandomStatements(for: randomSequence)
+
         let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
             return lhs.key.rawValue < rhs.key.rawValue
         }.map({ $0.value }).map({ String($0) }).joined()
 
-//        print("\(randomStatements) solve sequence \(sortedSequence) with complexity \(complexity)")
-        print("working..")
-        hits.append(Puzzle(statements: Array(randomStatements), answer: sortedSequence))
+        guard hits[sortedSequence] == nil else {
+    //        print("combo taken")
+            continue
+        }
+
+        if let complexity = solve(statements: randomStatements, possibilities: ALL_LOCKS.count + 1) {
+
+            guard complexity > 3 else { continue }
+
+            print("working.. \(hits.count) \(sortedSequence) \(complexity)")
+            hits[sortedSequence] = Puzzle(statements: Array(randomStatements), answer: sortedSequence)
+//            print(Puzzle(statements: Array(randomStatements), answer: sortedSequence), hits.count)
+        }
     }
+
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = .prettyPrinted
+
+    let dtoHits = hits.map({ $0.value.dataTransferObject() })
+    let data = try! encoder.encode(dtoHits)
+
+    print(String(data: data, encoding: .utf8)!)
+
+    let filename = getDocumentsDirectory().appendingPathComponent("puzzles_88.json")
+
+    try! data.write(to: filename)
+    //print(hits)
 }
 
-let encoder = JSONEncoder()
-encoder.outputFormatting = .prettyPrinted
-
-let dtoHits = hits.map({ $0.dataTransferObject() })
-let data = try! encoder.encode(dtoHits)
-
-print(String(data: data, encoding: .utf8)!)
-
-let filename = getDocumentsDirectory().appendingPathComponent("ecco2k.json")
-
-try! data.write(to: filename)
+run()
