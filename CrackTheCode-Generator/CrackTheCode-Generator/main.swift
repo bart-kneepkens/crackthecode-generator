@@ -8,12 +8,36 @@
 
 import Cocoa
 
-func isEasilyGuessable(_ statement: Statement) -> Bool {
-    guard statement.type == .multiply else { return false }
+enum Difficulty: Int {
+    case easy
+    case medium
+    case hard
+}
+
+extension Difficulty {
+    var maximumComplexity: Int {
+        switch self {
+        case .easy: return Int.max
+        case .medium: return 3
+        case .hard: return Int.max
+        }
+    }
+}
+
+func isEasilyGuessable(_ statement: Statement, with difficulty: Difficulty) -> Bool {
     
-    let number = statement.result
-    let squareRoot = sqrt(Double(number))
-    return [1.0, 5.0, 3.0, 4.0, 5.0, 6.0].contains(squareRoot)
+    if statement.type == .add {
+        let range = possibleValues(for: difficulty)
+        return statement.result == (range.upperBound * 2)
+    }
+    
+    if statement.type == .multiply {
+        let number = statement.result
+        let squareRoot = sqrt(Double(number))
+        return [1.0, 5.0, 3.0, 4.0, 5.0, 6.0].contains(squareRoot)
+    }
+    
+    return false
 }
 
 func getDocumentsDirectory() -> URL {
@@ -21,12 +45,27 @@ func getDocumentsDirectory() -> URL {
     return paths[0]
 }
 
-func solve(statements: Set<Statement>, possibilities: Int) -> Int?{
-    let possibleValues = Set(0..<possibilities)
+func getLocks(for difficulty: Difficulty) -> [Lock] {
+    if difficulty == .easy {
+        return [.A, .B, .C]
+    }
+    return ALL_LOCKS
+}
+
+func possibleValues(for difficulty: Difficulty) -> ClosedRange<Int> {
+    if difficulty == .easy {
+        return 1...3
+    }
+    return 0...6
+}
+
+func solve(statements: Set<Statement>, difficulty: Difficulty) -> Int? {
+    
+    let values = possibleValues(for: difficulty)
     var possibleAnswers: [Lock: Set<Int>] = [:]
     
-    for lock in ALL_LOCKS.prefix(upTo: possibilities - 1) {
-        possibleAnswers[lock] = possibleValues
+    for lock in getLocks(for: difficulty) {
+        possibleAnswers[lock] = Set(values)
     }
     
     var isDone = false
@@ -90,9 +129,9 @@ func solve(statements: Set<Statement>, possibilities: Int) -> Int?{
     return complexity
 }
 
-func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
+func generateRandomStatements(for sequence: [Lock: Int], with difficulty: Difficulty) -> Set<Statement> {
     var generatedStatements = Set<Statement>()
-    let possibleLocks: Set<Lock> = Set(ALL_LOCKS.prefix(upTo: sequence.count))
+    let possibleLocks: Set<Lock> = Set(getLocks(for: difficulty))
     
     while(generatedStatements.count < sequence.count) {
         let leftLock = possibleLocks.randomElement()!
@@ -118,7 +157,7 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
         
         let newStatement = Statement(left: leftLock, right: rightLock, result: result, type: type)
         
-        guard !isEasilyGuessable(newStatement) else { continue }
+        guard !isEasilyGuessable(newStatement, with: difficulty) else { continue }
         
         guard !generatedStatements.contains(where: { $0 == newStatement }) else { continue }
         
@@ -128,47 +167,44 @@ func generateRandomStatements(for sequence: [Lock: Int]) -> Set<Statement> {
     return generatedStatements
 }
 
-func generateRandomSequence(withLength length: Int) -> [Lock: Int] {
-    let locks: [Lock] = Array(ALL_LOCKS.prefix(upTo: length))
-    let maxValue = length
+func generateRandomSequence(difficulty: Difficulty) -> [Lock: Int] {
+    let locks: [Lock] = getLocks(for: difficulty)
+    
     var sequence: [Lock: Int] = [:]
-    
-    
+
     for lock in locks {
-        let randomValue = Array(0...maxValue).randomElement() ?? -1
+        let randomValue = Array(possibleValues(for: difficulty)).randomElement() ?? -1
         sequence[lock] = randomValue
     }
     
     return sequence
 }
 
-func run() {
+func run(amount: Int, difficulty: Difficulty) {
     var hits: [String: Puzzle] = [:]
+    
+//    let magicNumber = difficulty == .easy ? 3 : 6
 
-    var counter = 0
+    while hits.count < amount {
 
-    while hits.count < 10 {
+        let randomSequence = generateRandomSequence(difficulty: difficulty)
 
-        let randomSequence = generateRandomSequence(withLength: ALL_LOCKS.count)
-
-        let randomStatements = generateRandomStatements(for: randomSequence)
+        let randomStatements = generateRandomStatements(for: randomSequence, with: difficulty)
 
         let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
             return lhs.key.rawValue < rhs.key.rawValue
         }.map({ $0.value }).map({ String($0) }).joined()
 
         guard hits[sortedSequence] == nil else {
-    //        print("combo taken")
             continue
         }
 
-        if let complexity = solve(statements: randomStatements, possibilities: ALL_LOCKS.count + 1) {
+        if let complexity = solve(statements: randomStatements, difficulty: difficulty) {
 
-            guard complexity > 3 else { continue }
+            guard complexity <= difficulty.maximumComplexity else { continue }
 
             print("working.. \(hits.count) \(sortedSequence) \(complexity)")
             hits[sortedSequence] = Puzzle(statements: Array(randomStatements), answer: sortedSequence)
-//            print(Puzzle(statements: Array(randomStatements), answer: sortedSequence), hits.count)
         }
     }
 
@@ -183,7 +219,6 @@ func run() {
     let filename = getDocumentsDirectory().appendingPathComponent("puzzles_88.json")
 
     try! data.write(to: filename)
-    //print(hits)
 }
 
-run()
+run(amount: 5000, difficulty: .medium)
