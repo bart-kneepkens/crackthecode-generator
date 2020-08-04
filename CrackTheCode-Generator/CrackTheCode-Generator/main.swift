@@ -124,7 +124,7 @@ func generateRandomEquations(for sequence: [Lock: Int], with difficulty: Difficu
         let leftValue = sequence[leftLock]!
         let rightValue = sequence[rightLock]!
         
-        let type = [StatementType.subtract, StatementType.add, StatementType.multiply].randomElement()!
+        let type = ALL_EQUATION_TYPES.randomElement()!
         
         // skip
         if type == .subtract && rightValue > leftValue {

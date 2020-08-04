@@ -5,8 +5,9 @@
 //  Created by Bart Kneepkens on 10/05/2020.
 //  Copyright © 2020 bart-kneepkens. All rights reserved.
 //
+let ALL_EQUATION_TYPES: [EquationType] = [.add, .subtract, .multiply]
 
-enum StatementType: String, Codable {
+enum EquationType: String, Codable {
     case add = "+"
     case subtract = "-"
     case multiply = "x"
@@ -16,10 +17,10 @@ struct Equation: CustomStringConvertible, Hashable {
     let left: Lock
     let right: Lock
     let result: Int
-    let type: StatementType
+    let type: EquationType
     
     
-    /// A textual description of the statement, in the format of `a+b=2`
+    /// A textual description of the equation in the format of `a+b=2`
     var description: String {
         return "\(left)\(type.rawValue)\(right)=\(result)"
     }
@@ -42,7 +43,7 @@ extension Equation {
         let result = String(stringValue[stringValue.index(after: stringValue.firstIndex(of: "=")!)..<stringValue.endIndex])
         let parts = String(stringValue[stringValue.startIndex..<stringValue.index(stringValue.startIndex, offsetBy: String.IndexDistance(3))])
         
-        let type = StatementType(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 1)])")!
+        let type = EquationType(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 1)])")!
         let lhs = Lock(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 0)])".uppercased())!
         let rhs = Lock(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 2)])".uppercased())!
         self.init(left: lhs, right: rhs, result: Int(result)!, type: type)
@@ -70,5 +71,5 @@ struct EquationDTO: Codable {
     let left: Lock?
     let right: Lock?
     let result: Int?
-    let type: StatementType?
+    let type: EquationType?
 }
