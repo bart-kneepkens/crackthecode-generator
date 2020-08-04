@@ -190,7 +190,7 @@ func run(amount: Int, difficulty: Difficulty) {
     let encoder = JSONEncoder()
     encoder.outputFormatting = .prettyPrinted
 
-    let dtoHits = hits.map({ $0.value.dataTransferObject() })
+    let dtoHits = hits.map({ $0.value.dataTransferObject })
     let data = try! encoder.encode(dtoHits)
 
     let filename = getDocumentsDirectory().appendingPathComponent("puzzles_\(difficulty.rawValue).json")

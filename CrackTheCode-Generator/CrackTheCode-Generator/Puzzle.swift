@@ -20,7 +20,7 @@ extension Puzzle {
         self.answer = dto.answer ?? ""
     }
     
-    func dataTransferObject() -> PuzzleDTO {
+    var dataTransferObject: PuzzleDTO {
         return PuzzleDTO(equations: self.equations.map({ $0.description }), answer: self.answer)
     }
 }

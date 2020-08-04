@@ -49,27 +49,3 @@ extension Equation {
         self.init(left: lhs, right: rhs, result: Int(result)!, type: type)
     }
 }
-
-extension Equation {
-    init(_ dto: EquationDTO) {
-        self.left = dto.left ?? .A
-        self.right = dto.right ?? .A
-        self.result = dto.result ?? -1
-        self.type = dto.type ?? .add
-    }
-    
-    func dataTransferObject() -> EquationDTO {
-        return EquationDTO(left: self.left, right: self.right, result: self.result, type: self.type)
-    }
-}
-
-/**
- Used to transfer to and from  JSON
- All fields are optional -  this way there is no need to pollute the actual domain type with Codable initializers and CodingKeys.
- */
-struct EquationDTO: Codable {
-    let left: Lock?
-    let right: Lock?
-    let result: Int?
-    let type: EquationType?
-}
