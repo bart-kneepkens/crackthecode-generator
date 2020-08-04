@@ -12,12 +12,14 @@ enum Difficulty: Int {
     case easy
     case medium
     case hard
+    case wizard
 }
 
 extension Difficulty {
     var minimumComplexity: Int {
         switch self {
         case .hard: return 3
+        case .wizard: return 6
         default:
             return Int.min
         }
@@ -27,7 +29,8 @@ extension Difficulty {
         switch self {
         case .easy: return Int.max
         case .medium: return 3
-        case .hard: return Int.max
+        case .hard: return 6
+        case .wizard: return Int.max
         }
     }
 }
@@ -224,9 +227,12 @@ func run(amount: Int, difficulty: Difficulty) {
 
 //    print(String(data: data, encoding: .utf8)!)
 
-    let filename = getDocumentsDirectory().appendingPathComponent("puzzles_88.json")
+    let filename = getDocumentsDirectory().appendingPathComponent("puzzles_\(difficulty.rawValue).json")
 
     try! data.write(to: filename)
 }
 
-run(amount: 26, difficulty: .hard)
+run(amount: 26, difficulty: .easy)
+run(amount: 250, difficulty: .medium)
+run(amount: 250, difficulty: .hard)
+run(amount: 250, difficulty: .wizard)
