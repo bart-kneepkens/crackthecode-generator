@@ -8,22 +8,6 @@
 
 import Foundation
 
-func isEasilyGuessable(_ equation: Equation, with difficulty: Difficulty) -> Bool {
-    
-    if equation.type == .add {
-        let range = possibleValues(for: difficulty)
-        return equation.result == (range.upperBound * 2)
-    }
-    
-    if equation.type == .multiply {
-        let number = equation.result
-        let squareRoot = sqrt(Double(number))
-        return [1.0, 5.0, 3.0, 4.0, 5.0, 6.0].contains(squareRoot)
-    }
-    
-    return false
-}
-
 func getDocumentsDirectory() -> URL {
     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     return paths[0]
@@ -141,7 +125,7 @@ func generateRandomEquations(for sequence: [Lock: Int], with difficulty: Difficu
         
         let newEquation = Equation(left: leftLock, right: rightLock, result: result, type: type)
         
-        guard !isEasilyGuessable(newEquation, with: difficulty) else { continue }
+        guard !newEquation.isEasilyGuessable(with: difficulty) else { continue }
         
         guard !generatedEquations.contains(where: { $0 == newEquation }) else { continue }
         

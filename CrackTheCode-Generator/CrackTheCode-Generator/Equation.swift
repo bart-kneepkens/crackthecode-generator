@@ -5,6 +5,9 @@
 //  Created by Bart Kneepkens on 10/05/2020.
 //  Copyright © 2020 bart-kneepkens. All rights reserved.
 //
+
+import Foundation
+
 let ALL_EQUATION_TYPES: [EquationType] = [.add, .subtract, .multiply]
 
 enum EquationType: String, Codable {
@@ -47,5 +50,22 @@ extension Equation {
         let lhs = Lock(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 0)])".uppercased())!
         let rhs = Lock(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 2)])".uppercased())!
         self.init(left: lhs, right: rhs, result: Int(result)!, type: type)
+    }
+}
+
+extension Equation {
+    func isEasilyGuessable(with difficulty: Difficulty) -> Bool {
+        if self.type == .add {
+              let range = possibleValues(for: difficulty)
+              return self.result == (range.upperBound * 2)
+          }
+          
+          if self.type == .multiply {
+              let number = self.result
+              let squareRoot = sqrt(Double(number))
+              return [1.0, 5.0, 3.0, 4.0, 5.0, 6.0].contains(squareRoot)
+          }
+          
+          return false
     }
 }
