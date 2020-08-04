@@ -52,12 +52,12 @@ extension Statement {
     func dataTransferObject() -> StatementDTO {
         return StatementDTO(left: self.left, right: self.right, result: self.result, type: self.type)
     }
-    
-    var string: String {
-        return self.description
-    }
 }
 
+/**
+ Used to transfer to and from  JSON
+ All fields are optional -  this way there is no need to pollute the actual domain type.
+ */
 struct StatementDTO: Codable {
     let left: Lock?
     let right: Lock?

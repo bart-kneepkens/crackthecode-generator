@@ -6,34 +6,7 @@
 //  Copyright © 2020 bart-kneepkens. All rights reserved.
 //
 
-import Cocoa
-
-enum Difficulty: Int {
-    case easy
-    case medium
-    case hard
-    case wizard
-}
-
-extension Difficulty {
-    var minimumComplexity: Int {
-        switch self {
-        case .hard: return 3
-        case .wizard: return 6
-        default:
-            return Int.min
-        }
-    }
-    
-    var maximumComplexity: Int {
-        switch self {
-        case .easy: return Int.max
-        case .medium: return 3
-        case .hard: return 6
-        case .wizard: return Int.max
-        }
-    }
-}
+import Foundation
 
 func isEasilyGuessable(_ statement: Statement, with difficulty: Difficulty) -> Bool {
     
@@ -193,11 +166,8 @@ func generateRandomSequence(difficulty: Difficulty) -> [Lock: Int] {
 
 func run(amount: Int, difficulty: Difficulty) {
     var hits: [String: Puzzle] = [:]
-    
-//    let magicNumber = difficulty == .easy ? 3 : 6
 
     while hits.count < amount {
-
         let randomSequence = generateRandomSequence(difficulty: difficulty)
 
         let randomStatements = generateRandomStatements(for: randomSequence, with: difficulty)
@@ -211,9 +181,7 @@ func run(amount: Int, difficulty: Difficulty) {
         }
 
         if let complexity = solve(statements: randomStatements, difficulty: difficulty) {
-
             guard complexity <= difficulty.maximumComplexity && complexity > difficulty.minimumComplexity else { continue }
-
             print("working.. \(hits.count) \(sortedSequence) \(complexity)")
             hits[sortedSequence] = Puzzle(statements: Array(randomStatements), answer: sortedSequence)
         }
@@ -224,8 +192,6 @@ func run(amount: Int, difficulty: Difficulty) {
 
     let dtoHits = hits.map({ $0.value.dataTransferObject() })
     let data = try! encoder.encode(dtoHits)
-
-//    print(String(data: data, encoding: .utf8)!)
 
     let filename = getDocumentsDirectory().appendingPathComponent("puzzles_\(difficulty.rawValue).json")
 

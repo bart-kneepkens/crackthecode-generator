@@ -11,6 +11,7 @@
 		AE031D1924688B3200B9336D /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1824688B3200B9336D /* Statement.swift */; };
 		AE031D1B24688BA300B9336D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1A24688BA300B9336D /* Lock.swift */; };
 		AE031D1D24688BD800B9336D /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1C24688BD800B9336D /* Puzzle.swift */; };
+		AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC585DB24D9F68000F95C6D /* Difficulty.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,7 @@
 		AE031D1824688B3200B9336D /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		AE031D1A24688BA300B9336D /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		AE031D1C24688BD800B9336D /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
+		AEC585DB24D9F68000F95C6D /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,9 +66,10 @@
 			isa = PBXGroup;
 			children = (
 				AE031D0F2461BD6900B9336D /* main.swift */,
-				AE031D1824688B3200B9336D /* Statement.swift */,
 				AE031D1A24688BA300B9336D /* Lock.swift */,
 				AE031D1C24688BD800B9336D /* Puzzle.swift */,
+				AE031D1824688B3200B9336D /* Statement.swift */,
+				AEC585DB24D9F68000F95C6D /* Difficulty.swift */,
 			);
 			path = "CrackTheCode-Generator";
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			files = (
 				AE031D102461BD6900B9336D /* main.swift in Sources */,
 				AE031D1D24688BD800B9336D /* Puzzle.swift in Sources */,
+				AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */,
 				AE031D1B24688BA300B9336D /* Lock.swift in Sources */,
 				AE031D1924688B3200B9336D /* Statement.swift in Sources */,
 			);
