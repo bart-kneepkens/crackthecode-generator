@@ -7,29 +7,29 @@
 //
 
 /*
- Represents a full puzzle; meaning a set of Statements, and a single combination.
+ Represents a full puzzle; meaning a set of Equations, and a single combination.
  */
 struct Puzzle {
-    let statements: [Statement]
+    let equations: [Equation]
     let answer: String
 }
 
 extension Puzzle {
     init(_ dto: PuzzleDTO) {
-        self.statements = dto.statements?.map({ Statement($0) }) ?? []
+        self.equations = dto.equations?.map({ Equation($0) }) ?? []
         self.answer = dto.answer ?? ""
     }
     
     func dataTransferObject() -> PuzzleDTO {
-        return PuzzleDTO(statements: self.statements.map({ $0.description }), answer: self.answer)
+        return PuzzleDTO(equations: self.equations.map({ $0.description }), answer: self.answer)
     }
 }
 
 /**
  Used to transfer to and from  JSON
- All fields are optional -  this way there is no need to pollute the actual domain type.
+ All fields are optional -  this way there is no need to pollute the actual domain type with Codable initializers and CodingKeys.
  */
 struct PuzzleDTO: Codable {
-    let statements: [String]?
+    let equations: [String]?
     let answer: String?
 }

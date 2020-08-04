@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AE031D102461BD6900B9336D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D0F2461BD6900B9336D /* main.swift */; };
-		AE031D1924688B3200B9336D /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1824688B3200B9336D /* Statement.swift */; };
+		AE031D1924688B3200B9336D /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1824688B3200B9336D /* Equation.swift */; };
 		AE031D1B24688BA300B9336D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1A24688BA300B9336D /* Lock.swift */; };
 		AE031D1D24688BD800B9336D /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1C24688BD800B9336D /* Puzzle.swift */; };
 		AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC585DB24D9F68000F95C6D /* Difficulty.swift */; };
@@ -29,7 +29,7 @@
 /* Begin PBXFileReference section */
 		AE031D0C2461BD6900B9336D /* CrackTheCode-Generator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CrackTheCode-Generator"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE031D0F2461BD6900B9336D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		AE031D1824688B3200B9336D /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
+		AE031D1824688B3200B9336D /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		AE031D1A24688BA300B9336D /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		AE031D1C24688BD800B9336D /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
 		AEC585DB24D9F68000F95C6D /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 				AE031D0F2461BD6900B9336D /* main.swift */,
 				AE031D1A24688BA300B9336D /* Lock.swift */,
 				AE031D1C24688BD800B9336D /* Puzzle.swift */,
-				AE031D1824688B3200B9336D /* Statement.swift */,
+				AE031D1824688B3200B9336D /* Equation.swift */,
 				AEC585DB24D9F68000F95C6D /* Difficulty.swift */,
 			);
 			path = "CrackTheCode-Generator";
@@ -136,7 +136,7 @@
 				AE031D1D24688BD800B9336D /* Puzzle.swift in Sources */,
 				AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */,
 				AE031D1B24688BA300B9336D /* Lock.swift in Sources */,
-				AE031D1924688B3200B9336D /* Statement.swift in Sources */,
+				AE031D1924688B3200B9336D /* Equation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

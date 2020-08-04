@@ -27,7 +27,7 @@ extension Difficulty {
     
     var maximumComplexity: Int {
         switch self {
-        case .easy: return Int.max // Easy games have only 3 locks, therefor no maximum complexity is needed
+        case .easy: return Int.max // Easy games have only 3 locks, so no maximum complexity is needed
         case .medium: return 3
         case .hard: return 6
         case .wizard: return Int.max

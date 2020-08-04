@@ -8,15 +8,15 @@
 
 import Foundation
 
-func isEasilyGuessable(_ statement: Statement, with difficulty: Difficulty) -> Bool {
+func isEasilyGuessable(_ equation: Equation, with difficulty: Difficulty) -> Bool {
     
-    if statement.type == .add {
+    if equation.type == .add {
         let range = possibleValues(for: difficulty)
-        return statement.result == (range.upperBound * 2)
+        return equation.result == (range.upperBound * 2)
     }
     
-    if statement.type == .multiply {
-        let number = statement.result
+    if equation.type == .multiply {
+        let number = equation.result
         let squareRoot = sqrt(Double(number))
         return [1.0, 5.0, 3.0, 4.0, 5.0, 6.0].contains(squareRoot)
     }
@@ -43,7 +43,7 @@ func possibleValues(for difficulty: Difficulty) -> ClosedRange<Int> {
     return 0...6
 }
 
-func solve(statements: Set<Statement>, difficulty: Difficulty) -> Int? {
+func solve(equations: Set<Equation>, difficulty: Difficulty) -> Int? {
     
     let values = possibleValues(for: difficulty)
     var possibleAnswers: [Lock: Set<Int>] = [:]
@@ -60,23 +60,23 @@ func solve(statements: Set<Statement>, difficulty: Difficulty) -> Int? {
         let initialPossible = possibleAnswers
         complexity += 1
         
-        for statement in statements {
+        for equation in equations {
             var newRight: Set<Int> =  []
             var newLeft: Set<Int> = []
             
-            let possibleLefts = possibleAnswers[statement.left]!
-            let possibleRights = possibleAnswers[statement.right]!
+            let possibleLefts = possibleAnswers[equation.left]!
+            let possibleRights = possibleAnswers[equation.right]!
             
-            func findHits(in set: Set<Int>, with statement: Statement, from number: Int, left: Bool) -> Set<Int> {
-                switch statement.type {
-                case .add: return set.filter({ number + $0 == statement.result })
-                case .subtract: return left ? set.filter({ $0 - number == statement.result }) : set.filter({ number - $0 == statement.result })
-                case .multiply: return set.filter({ number * $0 == statement.result })
+            func findHits(in set: Set<Int>, with equation: Equation, from number: Int, left: Bool) -> Set<Int> {
+                switch equation.type {
+                case .add: return set.filter({ number + $0 == equation.result })
+                case .subtract: return left ? set.filter({ $0 - number == equation.result }) : set.filter({ number - $0 == equation.result })
+                case .multiply: return set.filter({ number * $0 == equation.result })
                 }
             }
             
             for num in possibleLefts {
-                let rightNums = findHits(in: possibleRights, with: statement, from: num, left: false )
+                let rightNums = findHits(in: possibleRights, with: equation, from: num, left: false )
                 
                 if rightNums.count > 0 {
                     rightNums.forEach({ newRight.insert($0) })
@@ -84,15 +84,15 @@ func solve(statements: Set<Statement>, difficulty: Difficulty) -> Int? {
             }
             
             for num in possibleRights {
-                let leftNums = findHits(in: possibleLefts, with: statement, from: num, left: true)
+                let leftNums = findHits(in: possibleLefts, with: equation, from: num, left: true)
                 
                 if leftNums.count > 0 {
                     leftNums.forEach({ newLeft.insert($0) })
                 }
             }
             
-            possibleAnswers[statement.right] = possibleRights.intersection(newRight)
-            possibleAnswers[statement.left] = possibleLefts.intersection(newLeft)
+            possibleAnswers[equation.right] = possibleRights.intersection(newRight)
+            possibleAnswers[equation.left] = possibleLefts.intersection(newLeft)
         }
         
         // Nothing changed this time around, meaning there are multiple answers.
@@ -113,11 +113,11 @@ func solve(statements: Set<Statement>, difficulty: Difficulty) -> Int? {
     return complexity
 }
 
-func generateRandomStatements(for sequence: [Lock: Int], with difficulty: Difficulty) -> Set<Statement> {
-    var generatedStatements = Set<Statement>()
+func generateRandomEquations(for sequence: [Lock: Int], with difficulty: Difficulty) -> Set<Equation> {
+    var generatedEquations = Set<Equation>()
     let possibleLocks: Set<Lock> = Set(getLocks(for: difficulty))
     
-    while(generatedStatements.count < sequence.count) {
+    while(generatedEquations.count < sequence.count) {
         let leftLock = possibleLocks.randomElement()!
         let rightLock = possibleLocks.filter({ $0 != leftLock }).randomElement()!
         
@@ -139,16 +139,16 @@ func generateRandomStatements(for sequence: [Lock: Int], with difficulty: Diffic
         case .multiply: result = leftValue * rightValue
         }
         
-        let newStatement = Statement(left: leftLock, right: rightLock, result: result, type: type)
+        let newEquation = Equation(left: leftLock, right: rightLock, result: result, type: type)
         
-        guard !isEasilyGuessable(newStatement, with: difficulty) else { continue }
+        guard !isEasilyGuessable(newEquation, with: difficulty) else { continue }
         
-        guard !generatedStatements.contains(where: { $0 == newStatement }) else { continue }
+        guard !generatedEquations.contains(where: { $0 == newEquation }) else { continue }
         
-        generatedStatements.insert(newStatement)
+        generatedEquations.insert(newEquation)
     }
     
-    return generatedStatements
+    return generatedEquations
 }
 
 func generateRandomSequence(difficulty: Difficulty) -> [Lock: Int] {
@@ -170,7 +170,7 @@ func run(amount: Int, difficulty: Difficulty) {
     while hits.count < amount {
         let randomSequence = generateRandomSequence(difficulty: difficulty)
 
-        let randomStatements = generateRandomStatements(for: randomSequence, with: difficulty)
+        let randomEquations = generateRandomEquations(for: randomSequence, with: difficulty)
 
         let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
             return lhs.key.rawValue < rhs.key.rawValue
@@ -180,10 +180,10 @@ func run(amount: Int, difficulty: Difficulty) {
             continue
         }
 
-        if let complexity = solve(statements: randomStatements, difficulty: difficulty) {
+        if let complexity = solve(equations: randomEquations, difficulty: difficulty) {
             guard complexity <= difficulty.maximumComplexity && complexity > difficulty.minimumComplexity else { continue }
             print("working.. \(hits.count) \(sortedSequence) \(complexity)")
-            hits[sortedSequence] = Puzzle(statements: Array(randomStatements), answer: sortedSequence)
+            hits[sortedSequence] = Puzzle(equations: Array(randomEquations), answer: sortedSequence)
         }
     }
 
@@ -199,6 +199,6 @@ func run(amount: Int, difficulty: Difficulty) {
 }
 
 run(amount: 26, difficulty: .easy)
-run(amount: 250, difficulty: .medium)
-run(amount: 250, difficulty: .hard)
-run(amount: 250, difficulty: .wizard)
+//run(amount: 250, difficulty: .medium)
+//run(amount: 250, difficulty: .hard)
+//run(amount: 250, difficulty: .wizard)
