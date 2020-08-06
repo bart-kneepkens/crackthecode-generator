@@ -8,6 +8,17 @@
 
 import XCTest
 
+class EquationStringInitializerTests: XCTestCase {
+    func testGoodWeatherAdd() {
+        let equation = Equation("a+b=3")
+        XCTAssert(equation.left == .A)
+        XCTAssert(equation.right == .B)
+        XCTAssert(equation.result == 3)
+    }
+    
+    // TODO: add bad weather tests
+}
+
 class IsEasilyGuessableTests: XCTestCase {
     func testAddEquationUpperBoundsEasy() {
         let equation = Equation("a+b=6")

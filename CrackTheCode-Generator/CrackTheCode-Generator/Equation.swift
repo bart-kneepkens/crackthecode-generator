@@ -63,7 +63,7 @@ extension Equation {
     /// - Returns: `true` if this equation is obviously easy to solve
     func isEasilyGuessable(with difficulty: Difficulty) -> Bool {
         if self.type == .add {
-              let range = possibleValues(for: difficulty)
+              let range = possibleLockValues(for: difficulty)
               return self.result == (range.upperBound * 2)
           }
           
