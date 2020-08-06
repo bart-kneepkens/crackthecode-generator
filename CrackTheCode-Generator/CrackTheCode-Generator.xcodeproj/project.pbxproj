@@ -12,6 +12,12 @@
 		AE031D1B24688BA300B9336D /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1A24688BA300B9336D /* Lock.swift */; };
 		AE031D1D24688BD800B9336D /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1C24688BD800B9336D /* Puzzle.swift */; };
 		AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC585DB24D9F68000F95C6D /* Difficulty.swift */; };
+		AECD2E6F24DCA25B008B65D6 /* EquationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E6E24DCA25B008B65D6 /* EquationTests.swift */; };
+		AECD2E7024DCA27A008B65D6 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1824688B3200B9336D /* Equation.swift */; };
+		AECD2E7124DCA27D008B65D6 /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC585DB24D9F68000F95C6D /* Difficulty.swift */; };
+		AECD2E7224DCA280008B65D6 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1C24688BD800B9336D /* Puzzle.swift */; };
+		AECD2E7324DCA282008B65D6 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1A24688BA300B9336D /* Lock.swift */; };
+		AECD2E7424DCA285008B65D6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D0F2461BD6900B9336D /* main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,10 +39,20 @@
 		AE031D1A24688BA300B9336D /* Lock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
 		AE031D1C24688BD800B9336D /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
 		AEC585DB24D9F68000F95C6D /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
+		AECD2E6624DCA23F008B65D6 /* CrackTheCode-Generator-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CrackTheCode-Generator-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AECD2E6A24DCA23F008B65D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AECD2E6E24DCA25B008B65D6 /* EquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AE031D092461BD6900B9336D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AECD2E6324DCA23F008B65D6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -50,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				AE031D0E2461BD6900B9336D /* CrackTheCode-Generator */,
+				AECD2E6724DCA23F008B65D6 /* CrackTheCode-Generator-Tests */,
 				AE031D0D2461BD6900B9336D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				AE031D0C2461BD6900B9336D /* CrackTheCode-Generator */,
+				AECD2E6624DCA23F008B65D6 /* CrackTheCode-Generator-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,6 +90,15 @@
 				AEC585DB24D9F68000F95C6D /* Difficulty.swift */,
 			);
 			path = "CrackTheCode-Generator";
+			sourceTree = "<group>";
+		};
+		AECD2E6724DCA23F008B65D6 /* CrackTheCode-Generator-Tests */ = {
+			isa = PBXGroup;
+			children = (
+				AECD2E6A24DCA23F008B65D6 /* Info.plist */,
+				AECD2E6E24DCA25B008B65D6 /* EquationTests.swift */,
+			);
+			path = "CrackTheCode-Generator-Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -94,18 +121,38 @@
 			productReference = AE031D0C2461BD6900B9336D /* CrackTheCode-Generator */;
 			productType = "com.apple.product-type.tool";
 		};
+		AECD2E6524DCA23F008B65D6 /* CrackTheCode-Generator-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AECD2E6D24DCA23F008B65D6 /* Build configuration list for PBXNativeTarget "CrackTheCode-Generator-Tests" */;
+			buildPhases = (
+				AECD2E6224DCA23F008B65D6 /* Sources */,
+				AECD2E6324DCA23F008B65D6 /* Frameworks */,
+				AECD2E6424DCA23F008B65D6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CrackTheCode-Generator-Tests";
+			productName = "CrackTheCode-Generator-Tests";
+			productReference = AECD2E6624DCA23F008B65D6 /* CrackTheCode-Generator-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		AE031D042461BD6900B9336D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "bart-kneepkens";
 				TargetAttributes = {
 					AE031D0B2461BD6900B9336D = {
 						CreatedOnToolsVersion = 11.4.1;
+					};
+					AECD2E6524DCA23F008B65D6 = {
+						CreatedOnToolsVersion = 11.5;
 					};
 				};
 			};
@@ -123,9 +170,20 @@
 			projectRoot = "";
 			targets = (
 				AE031D0B2461BD6900B9336D /* CrackTheCode-Generator */,
+				AECD2E6524DCA23F008B65D6 /* CrackTheCode-Generator-Tests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AECD2E6424DCA23F008B65D6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AE031D082461BD6900B9336D /* Sources */ = {
@@ -137,6 +195,19 @@
 				AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */,
 				AE031D1B24688BA300B9336D /* Lock.swift in Sources */,
 				AE031D1924688B3200B9336D /* Equation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AECD2E6224DCA23F008B65D6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AECD2E6F24DCA25B008B65D6 /* EquationTests.swift in Sources */,
+				AECD2E7324DCA282008B65D6 /* Lock.swift in Sources */,
+				AECD2E7424DCA285008B65D6 /* main.swift in Sources */,
+				AECD2E7224DCA280008B65D6 /* Puzzle.swift in Sources */,
+				AECD2E7024DCA27A008B65D6 /* Equation.swift in Sources */,
+				AECD2E7124DCA27D008B65D6 /* Difficulty.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +349,42 @@
 			};
 			name = Release;
 		};
+		AECD2E6B24DCA23F008B65D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = GY3SL5N58H;
+				INFOPLIST_FILE = "CrackTheCode-Generator-Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.CrackTheCode-Generator-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AECD2E6C24DCA23F008B65D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = GY3SL5N58H;
+				INFOPLIST_FILE = "CrackTheCode-Generator-Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "bart-kneepkens.CrackTheCode-Generator-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -295,6 +402,15 @@
 			buildConfigurations = (
 				AE031D142461BD6900B9336D /* Debug */,
 				AE031D152461BD6900B9336D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AECD2E6D24DCA23F008B65D6 /* Build configuration list for PBXNativeTarget "CrackTheCode-Generator-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AECD2E6B24DCA23F008B65D6 /* Debug */,
+				AECD2E6C24DCA23F008B65D6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
