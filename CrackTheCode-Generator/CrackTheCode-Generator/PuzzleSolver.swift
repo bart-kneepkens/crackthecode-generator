@@ -12,10 +12,10 @@ protocol PuzzleSolver {
     /// Attempts to solve a given set of equations using only the possible values for the given difficulty.
     /// For example, for an easy game, numbers 1-3 will be used, and for all other difficulties 0-6 will be used.
     /// - Parameters:
-    ///   - equations: A set of unique equations
+    ///   - equations: An array of unique equations
     ///   - difficulty: Difficulty for which to solve the equations
     /// - Returns: The complexity of the solution, which is determined by the implementation of the solver algorithm. Returns `nil` if there are more than one valid solutions.
-    static func solve(equations: Set<Equation>, difficulty: Difficulty) -> Int?
+    static func solve(equations: [Equation], difficulty: Difficulty) -> Int?
 }
 
 class PlainPuzzleSolver: PuzzleSolver {
@@ -27,7 +27,7 @@ class PlainPuzzleSolver: PuzzleSolver {
      If all locks have only one possible value left - the code is cracked; which means the algorithm is done. If not, reiterate through the equations again.
      Every iteration through the equation increments the complexity by one.
      */
-    static func solve(equations: Set<Equation>, difficulty: Difficulty) -> Int? {
+    static func solve(equations: [Equation], difficulty: Difficulty) -> Int? {
         // Setup
         var possibleAnswers: [Lock: Set<Int>] = [:]
         let possibleLockValues = Set(Utilities.possibleLockValues(for: difficulty))

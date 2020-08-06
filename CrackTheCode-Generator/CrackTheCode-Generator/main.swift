@@ -66,7 +66,7 @@ func run(amount: Int, difficulty: Difficulty) {
     while hits.count < amount {
         let randomSequence = generateRandomSequence(difficulty: difficulty)
         
-        let randomEquations = generateRandomEquations(for: randomSequence, with: difficulty)
+        let randomEquations = Array(generateRandomEquations(for: randomSequence, with: difficulty))
         
         let sortedSequence = Array(randomSequence).sorted { (lhs, rhs) -> Bool in
             return lhs.key.rawValue < rhs.key.rawValue
