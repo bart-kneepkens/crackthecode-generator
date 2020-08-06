@@ -9,8 +9,8 @@
 import XCTest
 
 class PlainPuzzleSolverTests: XCTestCase {
-    func testSanity() {
-        
+    func testEasyPuzzle() {
+        // This is the first puzzle in Gridlock: Crack The Code, with difficulty .easy
         /*
          {
            "answer" : "123",
@@ -25,4 +25,10 @@ class PlainPuzzleSolverTests: XCTestCase {
         let complexity = PlainPuzzleSolver.solve(equations: equations, difficulty: .easy)
         XCTAssert(complexity == 1)
     }
+    
+    func testUnsolvablePuzzle() {
+           let equations = [Equation("A+B=3"),Equation("B+C=3"),Equation("C+A=3")]
+           let complexity = PlainPuzzleSolver.solve(equations: equations, difficulty: .easy)
+           XCTAssert(complexity == nil)
+       }
 }
