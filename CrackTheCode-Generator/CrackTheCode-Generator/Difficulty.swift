@@ -47,4 +47,13 @@ extension Difficulty {
         }
         return 0...6
     }
+    
+    var maximumPuzzleAmount: Int {
+        if self == .easy {
+            // 3 * 3 * 3, except that it's impossible to find working equations for the combination '333', so that one excluded.
+            return 26
+        }
+        // TODO: find out edge cases for other difficulties
+        return Int.max
+    }
 }

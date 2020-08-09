@@ -81,23 +81,17 @@ func run(amount: Int, difficulty: Difficulty) {
         if let complexity = PlainPuzzleSolver.solve(equations: randomEquations, difficulty: difficulty) {
             guard complexity <= difficulty.maximumComplexity && complexity > difficulty.minimumComplexity else { continue }
             confirmedPuzzles[sortedSequence] = Puzzle(equations: Array(randomEquations), solution: sortedSequence)
-//            print("Puzzle generated with complexity \(complexity): \(sortedSequence). (\(confirmedPuzzles.count)/\(amount))")
         }
     }
     
     let encoder = JSONEncoder()
-//    encoder.outputFormatting = .prettyPrinted
+    encoder.outputFormatting = .prettyPrinted
     
     let dtoHits = confirmedPuzzles.map({ $0.value.dataTransferObject })
     let data = try! encoder.encode(dtoHits)
     
     print(String(bytes: data, encoding: .utf8)!)
 }
-
-//run(amount: 10, difficulty: .easy)
-//run(amount: 250, difficulty: .medium)
-//run(amount: 250, difficulty: .hard)
-//run(amount: 250, difficulty: .wizard)
 
 func printUsage(){
     print("""
@@ -111,7 +105,6 @@ let argumentsCount = CommandLine.argc
 let arguments = CommandLine.arguments
 
 guard argumentsCount > 2 else {
-    print("Too little arguments provided.")
     printUsage()
     exit(1)
 }
@@ -121,4 +114,9 @@ guard let difficulty = Difficulty(rawValue: arguments[1]) else {
     exit(1)
 }
 
-print("Generating \(arguments[2]) puzzles with difficulty \(arguments[1])")
+guard let amount = Int(arguments[2]), amount <= difficulty.maximumPuzzleAmount else {
+    print("Please provide a valid number")
+    exit(1)
+}
+
+run(amount: amount, difficulty: difficulty)
