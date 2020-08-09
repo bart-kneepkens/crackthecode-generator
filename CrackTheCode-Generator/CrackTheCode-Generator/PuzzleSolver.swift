@@ -30,8 +30,8 @@ class PlainPuzzleSolver: PuzzleSolver {
     static func solve(equations: [Equation], difficulty: Difficulty) -> Int? {
         // Setup
         var possibleAnswers: [Lock: Set<Int>] = [:]
-        let possibleLockValues = Set(Utilities.possibleLockValues(for: difficulty))
-        Utilities.getLocks(for: difficulty).forEach({ possibleAnswers[$0] = possibleLockValues }) // Initially every lock still has every possibilty open
+        let possibleLockValues = Set(difficulty.possibleLockValues)
+        difficulty.locks.forEach({ possibleAnswers[$0] = possibleLockValues }) // Initially every lock still has every possibilty open
         
         var solvingIsDone = false
         var complexity = 0

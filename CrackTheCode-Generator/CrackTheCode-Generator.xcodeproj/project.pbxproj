@@ -18,11 +18,9 @@
 		AECD2E7224DCA280008B65D6 /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1C24688BD800B9336D /* Puzzle.swift */; };
 		AECD2E7324DCA282008B65D6 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1A24688BA300B9336D /* Lock.swift */; };
 		AECD2E7424DCA285008B65D6 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D0F2461BD6900B9336D /* main.swift */; };
-		AECD2E7624DCAD8C008B65D6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E7524DCAD8C008B65D6 /* Utilities.swift */; };
 		AECD2E7824DCAE82008B65D6 /* PuzzleSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E7724DCAE82008B65D6 /* PuzzleSolver.swift */; };
 		AECD2E7A24DCB533008B65D6 /* PuzzleSolverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E7924DCB533008B65D6 /* PuzzleSolverTests.swift */; };
 		AECD2E7B24DCB53A008B65D6 /* PuzzleSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E7724DCAE82008B65D6 /* PuzzleSolver.swift */; };
-		AECD2E7C24DCB572008B65D6 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E7524DCAD8C008B65D6 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,7 +45,6 @@
 		AECD2E6624DCA23F008B65D6 /* CrackTheCode-Generator-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CrackTheCode-Generator-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECD2E6A24DCA23F008B65D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AECD2E6E24DCA25B008B65D6 /* EquationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationTests.swift; sourceTree = "<group>"; };
-		AECD2E7524DCAD8C008B65D6 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		AECD2E7724DCAE82008B65D6 /* PuzzleSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleSolver.swift; sourceTree = "<group>"; };
 		AECD2E7924DCB533008B65D6 /* PuzzleSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleSolverTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,7 +93,6 @@
 				AE031D1C24688BD800B9336D /* Puzzle.swift */,
 				AE031D1824688B3200B9336D /* Equation.swift */,
 				AEC585DB24D9F68000F95C6D /* Difficulty.swift */,
-				AECD2E7524DCAD8C008B65D6 /* Utilities.swift */,
 				AECD2E7724DCAE82008B65D6 /* PuzzleSolver.swift */,
 			);
 			path = "CrackTheCode-Generator";
@@ -156,7 +152,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = "bart-kneepkens";
 				TargetAttributes = {
 					AE031D0B2461BD6900B9336D = {
@@ -201,7 +197,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AECD2E7624DCAD8C008B65D6 /* Utilities.swift in Sources */,
 				AE031D102461BD6900B9336D /* main.swift in Sources */,
 				AE031D1D24688BD800B9336D /* Puzzle.swift in Sources */,
 				AECD2E7824DCAE82008B65D6 /* PuzzleSolver.swift in Sources */,
@@ -221,7 +216,6 @@
 				AECD2E7424DCA285008B65D6 /* main.swift in Sources */,
 				AECD2E7224DCA280008B65D6 /* Puzzle.swift in Sources */,
 				AECD2E7024DCA27A008B65D6 /* Equation.swift in Sources */,
-				AECD2E7C24DCB572008B65D6 /* Utilities.swift in Sources */,
 				AECD2E7124DCA27D008B65D6 /* Difficulty.swift in Sources */,
 				AECD2E7A24DCB533008B65D6 /* PuzzleSolverTests.swift in Sources */,
 			);

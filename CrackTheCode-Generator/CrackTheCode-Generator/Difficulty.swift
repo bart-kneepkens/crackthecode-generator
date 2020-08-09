@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Difficulty: Int {
+enum Difficulty: String {
     case easy
     case medium
     case hard
@@ -32,5 +32,19 @@ extension Difficulty {
         case .hard: return 6
         case .wizard: return Int.max
         }
+    }
+    
+    var locks: [Lock] {
+        if self == .easy {
+            return [.A, .B, .C]
+        }
+        return ALL_LOCKS
+    }
+    
+    var possibleLockValues: ClosedRange<Int> {
+        if self == .easy {
+            return 1...3
+        }
+        return 0...6
     }
 }

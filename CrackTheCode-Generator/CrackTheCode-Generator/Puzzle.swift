@@ -11,17 +11,17 @@
  */
 struct Puzzle {
     let equations: [Equation]
-    let answer: String
+    let solution: String
 }
 
 extension Puzzle {
     init(_ dto: PuzzleDTO) {
         self.equations = dto.equations?.map({ Equation($0) }) ?? []
-        self.answer = dto.answer ?? ""
+        self.solution = dto.solution ?? ""
     }
     
     var dataTransferObject: PuzzleDTO {
-        return PuzzleDTO(equations: self.equations.map({ $0.description }), answer: self.answer)
+        return PuzzleDTO(equations: self.equations.map({ $0.description }), solution: self.solution)
     }
 }
 
@@ -31,5 +31,5 @@ extension Puzzle {
  */
 struct PuzzleDTO: Codable {
     let equations: [String]?
-    let answer: String?
+    let solution: String?
 }
