@@ -22,7 +22,6 @@ struct Equation: CustomStringConvertible, Hashable {
     let result: Int
     let type: EquationType
     
-    
     /// A textual description of the equation in the format of `a+b=2`
     var description: String {
         return "\(left)\(type.rawValue)\(right)=\(result)"
