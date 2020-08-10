@@ -16,7 +16,7 @@ struct Puzzle {
 
 extension Puzzle {
     init(_ dto: PuzzleDTO) {
-        self.equations = dto.equations?.map({ Equation($0) }) ?? []
+        self.equations = dto.equations?.map({ Equation($0)! }) ?? []
         self.solution = dto.solution ?? ""
     }
     

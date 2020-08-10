@@ -13,6 +13,8 @@
 		AE031D1D24688BD800B9336D /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1C24688BD800B9336D /* Puzzle.swift */; };
 		AE14C1A624E1E2EF00B4FDBF /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1A524E1E2EF00B4FDBF /* Generator.swift */; };
 		AE14C1A824E1E46F00B4FDBF /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1A724E1E46F00B4FDBF /* Sequence.swift */; };
+		AE14C1A924E1FD2700B4FDBF /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1A524E1E2EF00B4FDBF /* Generator.swift */; };
+		AE14C1AA24E1FD2B00B4FDBF /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1A724E1E46F00B4FDBF /* Sequence.swift */; };
 		AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC585DB24D9F68000F95C6D /* Difficulty.swift */; };
 		AECD2E6F24DCA25B008B65D6 /* EquationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E6E24DCA25B008B65D6 /* EquationTests.swift */; };
 		AECD2E7024DCA27A008B65D6 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1824688B3200B9336D /* Equation.swift */; };
@@ -224,7 +226,9 @@
 				AECD2E7424DCA285008B65D6 /* main.swift in Sources */,
 				AECD2E7224DCA280008B65D6 /* Puzzle.swift in Sources */,
 				AECD2E7024DCA27A008B65D6 /* Equation.swift in Sources */,
+				AE14C1A924E1FD2700B4FDBF /* Generator.swift in Sources */,
 				AECD2E7124DCA27D008B65D6 /* Difficulty.swift in Sources */,
+				AE14C1AA24E1FD2B00B4FDBF /* Sequence.swift in Sources */,
 				AECD2E7A24DCB533008B65D6 /* PuzzleSolverTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

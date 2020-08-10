@@ -65,7 +65,7 @@ class Generator {
             case .multiply: result = leftValue * rightValue
             }
             
-            let newEquation = Equation(left: leftLock, right: rightLock, result: result, type: type)
+            let newEquation = Equation(left: leftLock, type: type, right: rightLock, result: result)
             
             guard !newEquation.isEasilyGuessable(with: difficulty) else { continue }
             

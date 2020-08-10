@@ -18,9 +18,9 @@ enum EquationType: String, Codable {
 
 struct Equation: CustomStringConvertible, Hashable {
     let left: Lock
+    let type: EquationType
     let right: Lock
     let result: Int
-    let type: EquationType
     
     /// A textual description of the equation in the format of `a+b=2`
     var description: String {
@@ -41,14 +41,25 @@ struct Equation: CustomStringConvertible, Hashable {
 extension Equation {
     /// Initializer using a string, typically from a serialized source
     /// - Parameter stringValue: a string in the format of `a+b=2`
-    init(_ stringValue: String) {
-        let result = String(stringValue[stringValue.index(after: stringValue.firstIndex(of: "=")!)..<stringValue.endIndex])
-        let parts = String(stringValue[stringValue.startIndex..<stringValue.index(stringValue.startIndex, offsetBy: String.IndexDistance(3))])
+    init?(_ stringValue: String){
+        guard stringValue.count >= 5 else { return nil }
         
-        let type = EquationType(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 1)])")!
-        let lhs = Lock(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 0)])".uppercased())!
-        let rhs = Lock(rawValue: "\(parts[parts.index(parts.startIndex, offsetBy: 2)])".uppercased())!
-        self.init(left: lhs, right: rhs, result: Int(result)!, type: type)
+        if let expression = try? NSRegularExpression(pattern: "^(?<left>.)(?<operator>\\+|-|x)(?<right>.)=(?<result>.*)") {
+            guard let match = expression.firstMatch(in: stringValue, range: NSRange(location: 0, length: stringValue.count)), match.numberOfRanges == 5 else { return nil }
+            let characters = Array(stringValue) // To circumvent Swift's string indexing - because you can be sure it's utf8
+            
+            guard
+                let left = Lock(rawValue: String(characters[match.range(withName: "left").location]).uppercased()),
+            let equationType = EquationType(rawValue: String(characters[match.range(withName: "operator").location])),
+            let right = Lock(rawValue: String(characters[match.range(withName: "right").location]).uppercased()),
+            let result = Int(String(characters[match.range(withName: "result").location]))
+                else { return nil }
+            
+            self.init(left: left, type: equationType, right: right, result: result)
+            return
+        }
+
+        return nil
     }
 }
 
