@@ -10,26 +10,25 @@ import Foundation
 
 class Generator {
     func generatePuzzles(amount: Int, difficulty: Difficulty) -> [Puzzle] {
-        var confirmedPuzzles: [String: Puzzle] = [:]
+        var confirmedPuzzles: [String: Puzzle] = [:] // Solution: Puzzle
         
         while confirmedPuzzles.count < amount {
             let randomSequence = generateRandomSequence(difficulty: difficulty)
+            let solution = randomSequence.stringRepresentation
             
-            let sequenceString = randomSequence.stringRepresentation
-            
-            guard confirmedPuzzles[sequenceString] == nil else {
+            guard confirmedPuzzles[solution] == nil else {
                 continue
             }
             
-            let randomEquations = Array(generateRandomEquations(for: randomSequence, with: difficulty))
+            let randomEquations = generateRandomEquations(for: randomSequence, with: difficulty)
             
             if let complexity = PlainPuzzleSolver.solve(equations: randomEquations, difficulty: difficulty) {
                 guard complexity <= difficulty.maximumComplexity && complexity > difficulty.minimumComplexity else { continue }
-                confirmedPuzzles[sequenceString] = Puzzle(equations: Array(randomEquations), solution: sequenceString)
+                confirmedPuzzles[solution] = Puzzle(equations: randomEquations, solution: solution)
             }
         }
         
-        return confirmedPuzzles.map({ $0.value })
+        return Array(confirmedPuzzles.values)
     }
     
     /// Generates a set of unique random equations that are true for the given sequence
@@ -37,8 +36,8 @@ class Generator {
     /// - Parameters:
     ///   - sequence: The sequence for which to generate the equations
     ///   - difficulty: The difficulty for which to generate the equations
-    /// - Returns: A set of equations that are true for the given sequence and difficulty - one equation for every lock in the equation
-    fileprivate func generateRandomEquations(for sequence: Sequence, with difficulty: Difficulty) -> Set<Equation> {
+    /// - Returns: An array of equations that are true for the given sequence and difficulty - one equation for every lock in the equation
+    internal func generateRandomEquations(for sequence: Sequence, with difficulty: Difficulty) -> [Equation] {
         var generatedEquations = Set<Equation>()
         let possibleLocks: Set<Lock> = Set(difficulty.locks)
         
@@ -67,20 +66,18 @@ class Generator {
             
             let newEquation = Equation(left: leftLock, type: type, right: rightLock, result: result)
             
-            guard !newEquation.isEasilyGuessable(with: difficulty) else { continue }
-            
-            guard !generatedEquations.contains(where: { $0 == newEquation }) else { continue }
+            guard !newEquation.isEasilyGuessable(with: difficulty), !generatedEquations.contains(newEquation) else { continue }
             
             generatedEquations.insert(newEquation)
         }
         
-        return generatedEquations
+        return Array(generatedEquations)
     }
 
     /// Generates a random sequence of lock values - for example A:1, B:1, C:3
     /// - Parameter difficulty: The difficulty for which to generate a sequence
     /// - Returns: A dictionary with the `Lock` as keys, and its corresponding number as the value
-    fileprivate func generateRandomSequence(difficulty: Difficulty) -> Sequence {
+    internal func generateRandomSequence(difficulty: Difficulty) -> Sequence {
         return difficulty.locks.reduce(into: Sequence()) {
             $0[$1] = difficulty.possibleLockValues.randomElement()!
         }

@@ -15,6 +15,7 @@
 		AE14C1A824E1E46F00B4FDBF /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1A724E1E46F00B4FDBF /* Sequence.swift */; };
 		AE14C1A924E1FD2700B4FDBF /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1A524E1E2EF00B4FDBF /* Generator.swift */; };
 		AE14C1AA24E1FD2B00B4FDBF /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1A724E1E46F00B4FDBF /* Sequence.swift */; };
+		AE14C1AC24E3196200B4FDBF /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE14C1AB24E3196200B4FDBF /* Error.swift */; };
 		AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC585DB24D9F68000F95C6D /* Difficulty.swift */; };
 		AECD2E6F24DCA25B008B65D6 /* EquationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECD2E6E24DCA25B008B65D6 /* EquationTests.swift */; };
 		AECD2E7024DCA27A008B65D6 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE031D1824688B3200B9336D /* Equation.swift */; };
@@ -47,6 +48,7 @@
 		AE031D1C24688BD800B9336D /* Puzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
 		AE14C1A524E1E2EF00B4FDBF /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		AE14C1A724E1E46F00B4FDBF /* Sequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
+		AE14C1AB24E3196200B4FDBF /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		AEC585DB24D9F68000F95C6D /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		AECD2E6624DCA23F008B65D6 /* CrackTheCode-Generator-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "CrackTheCode-Generator-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECD2E6A24DCA23F008B65D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				AECD2E7724DCAE82008B65D6 /* PuzzleSolver.swift */,
 				AE14C1A524E1E2EF00B4FDBF /* Generator.swift */,
 				AE14C1A724E1E46F00B4FDBF /* Sequence.swift */,
+				AE14C1AB24E3196200B4FDBF /* Error.swift */,
 			);
 			path = "CrackTheCode-Generator";
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				AEC585DC24D9F68000F95C6D /* Difficulty.swift in Sources */,
 				AE14C1A624E1E2EF00B4FDBF /* Generator.swift in Sources */,
 				AE031D1B24688BA300B9336D /* Lock.swift in Sources */,
+				AE14C1AC24E3196200B4FDBF /* Error.swift in Sources */,
 				AE031D1924688B3200B9336D /* Equation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
