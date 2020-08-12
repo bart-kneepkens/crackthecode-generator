@@ -16,9 +16,9 @@ enum GeneratorError: Error {
     
     var message: String {
         switch self {
-        case .notEnoughArguments: return "Please provide 2 arguments - CrackTheCodeGenerator [difficulty] [amount]"
+        case .notEnoughArguments: return "Please provide 2 arguments, like this: \n./CrackTheCodeGenerator [difficulty] [amount] \n"
         case .invalidDifficulty: return "Please provide either 'easy', 'medium', 'hard', or 'wizard' as a difficulty."
-        case .invalidAmount: return "Please provide a valid number"
+        case .invalidAmount: return "Please provide a valid number for the amount of puzzles; at most 26 for 'easy'"
         case .serializingFailed: return "sorry lol"
         }
     }

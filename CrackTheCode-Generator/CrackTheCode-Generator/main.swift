@@ -13,7 +13,7 @@ func main() throws {
     let arguments = CommandLine.arguments
 
     guard argumentsCount == 3 else {
-        throw GeneratorError.invalidAmount
+        throw GeneratorError.notEnoughArguments
     }
 
     guard let difficulty = Difficulty(rawValue: arguments[1]) else {
