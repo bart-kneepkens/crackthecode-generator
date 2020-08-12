@@ -20,7 +20,7 @@ func main() throws {
         throw GeneratorError.invalidDifficulty
     }
 
-    guard let amount = Int(arguments[2]), amount <= difficulty.maximumPuzzleAmount else {
+    guard let amount = Int(arguments[2]), amount <= difficulty.maximumPuzzleAmount, amount > 0 else {
         throw GeneratorError.invalidAmount
     }
     
@@ -41,6 +41,5 @@ func main() throws {
 do {
     try main()
 } catch let error as GeneratorError {
-    print(error.message)
-    exit(1)
+    fputs(error.message, stderr) // goes to stderr
 }
