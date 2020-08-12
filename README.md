@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://bart-kneepkens.github.io/gridlock-crack-the-code/assets/appicon.png" width="400" height="400" />
+<img src="https://bart-kneepkens.github.io/gridlock-crack-the-code/assets/appicon.png" width="200" height="200" />
 </p>
 
 # Crack The Code - Generator
