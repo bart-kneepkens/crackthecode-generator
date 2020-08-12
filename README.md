@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://bart-kneepkens.github.io/gridlock-crack-the-code/assets/appicon.png" width="400" height="400" />
+</p>
+
 # Crack The Code - Generator
 Crack The Code - Generator is a basic macOS commandline utility to generate puzzles for [Gridlock: Crack The Code](https://bart-kneepkens.github.io/gridlock-crack-the-code/).
 
