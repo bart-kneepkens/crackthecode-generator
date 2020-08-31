@@ -14,4 +14,5 @@ Where `difficulty` is either `easy`, `medium`, `hard`, or `wizard`, and where `a
 
 
 # Limitations
-`easy` puzzles are played with possible values 1, 2, and 3. This significantly reduces the amount of unique combinations to 26 (because 333 would be considered too easily solvable, see [Equation.swift](CrackTheCode-Generator/CrackTheCode-Generator/Equation.swift)).
+- `easy` puzzles are played with possible values 1, 2, and 3. This significantly reduces the amount of unique combinations to 26 (because 333 would be considered too easily solvable, see [Equation.swift](CrackTheCode-Generator/CrackTheCode-Generator/Equation.swift)).
+- The current algorithm is rather naive; after generating a random sequence, it only tries one set of random equations. This can make the script slow when generating a lot of puzzles for higher difficulties. Still, generating about 700/800 puzzles (as done for Gridlock: Crack The Code) doesn't take unreasonably long.
